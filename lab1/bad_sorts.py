@@ -6,6 +6,8 @@ Feel free to modify and/or add functions to this file.
 import random
 import timeit
 
+SWAPS = [100, 1000, 5000]
+LENGTH = 5000
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
 def create_random_list(length, max_value):
@@ -91,7 +93,7 @@ def bubble_sort(L):
 def bubble_sort2(L):
     n = len(L)
     swapped = True
-
+    start = timeit.default_timer()
     while swapped:
         swapped = False
         i = 0
@@ -101,16 +103,19 @@ def bubble_sort2(L):
 
             j = i
             while j < n - 1 and value > L[j + 1]:
-                L[j] = L[j + 1] 
+                L[j] = L[j + 1]
                 j += 1
                 swapped = True
 
-            L[j] = value  
-            i = j + 1  
+            L[j] = value
+            i = j + 1
 
-        n -= 1 
+        n -= 1
+    elapsed = timeit.default_timer()
+    return elapsed - start
 
-    return L
+
+print(bubble_sort2(create_random_list(10000, 50)))
 
 
 # ******************* Selection sort code *******************
@@ -142,7 +147,7 @@ def selection_sort2(L):
     for i in range(n // 2):
         start_index = i
         end_index = n - 1 - i
-        
+
         min_index = start_index
         max_index = start_index
 
@@ -151,15 +156,16 @@ def selection_sort2(L):
                 min_index = j
             if L[j] > L[max_index]:
                 max_index = j
-        
+
         swap(L, start_index, min_index)
-        
+
         if max_index == start_index:
             max_index = min_index
-            
+
         swap(L, end_index, max_index)
 
     elapsed = timeit.default_timer()
     return elapsed - start
+
 
 print("Selection Sort 2", selection_sort2(create_random_list(10000, 50)))
