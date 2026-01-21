@@ -135,4 +135,31 @@ def find_min_index(L, n):
     return min_index
 
 
-# print(selection_sort(create_random_list(10000, 50)))
+# Improved Selection sort
+def selection_sort2(L):
+    start = timeit.default_timer()
+    n = len(L)
+    for i in range(n // 2):
+        start_index = i
+        end_index = n - 1 - i
+        
+        min_index = start_index
+        max_index = start_index
+
+        for j in range(start_index, end_index + 1):
+            if L[j] < L[min_index]:
+                min_index = j
+            if L[j] > L[max_index]:
+                max_index = j
+        
+        swap(L, start_index, min_index)
+        
+        if max_index == start_index:
+            max_index = min_index
+            
+        swap(L, end_index, max_index)
+
+    elapsed = timeit.default_timer()
+    return elapsed - start
+
+print("Selection Sort 2", selection_sort2(create_random_list(10000, 50)))
