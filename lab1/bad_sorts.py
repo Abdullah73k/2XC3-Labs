@@ -88,7 +88,29 @@ def bubble_sort(L):
     return elapsed - start
 
 
-# print(bubble_sort(create_random_list(10000, 50)))
+def bubble_sort2(L):
+    n = len(L)
+    swapped = True
+
+    while swapped:
+        swapped = False
+        i = 0
+
+        while i < n - 1:
+            value = L[i]
+
+            j = i
+            while j < n - 1 and value > L[j + 1]:
+                L[j] = L[j + 1] 
+                j += 1
+                swapped = True
+
+            L[j] = value  
+            i = j + 1  
+
+        n -= 1 
+
+    return L
 
 
 # ******************* Selection sort code *******************
