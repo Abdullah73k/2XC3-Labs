@@ -7,7 +7,10 @@ import random
 import timeit
 
 SWAPS = [100, 1000, 5000]
+RUNS = 3
 LENGTH = 5000
+MAX = 1000
+
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
 def create_random_list(length, max_value):
@@ -50,6 +53,9 @@ def insert(L, i):
             i -= 1
         else:
             return
+
+
+print(insertion_sort(create_near_sorted_list(LENGTH, MAX, SWAPS[1])))
 
 
 # This is the optimization/improvement we saw in lecture
