@@ -11,6 +11,10 @@ Author: Vincent Maccio
 """
 
 import math
+from bad_sorts import create_near_sorted_list
+import timeit
+
+SWAPS = [100, 500, 1000, 5000, 9247]
 
 # ************ Quick Sort ************
 def quicksort(L):
