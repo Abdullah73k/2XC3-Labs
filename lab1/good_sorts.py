@@ -51,12 +51,55 @@ def duel_quicksort(L):
     mid = [val for val in L if lower_piv < val < higher_piv]
     right = [val for val in L if val > higher_piv]
 
-    return duel_quicksort(left) + [lower_piv] + duel_quicksort(mid) + [higher_piv] + duel_quicksort(right)
+    return (
+        duel_quicksort(left)
+        + [lower_piv]
+        + duel_quicksort(mid)
+        + [higher_piv]
+        + duel_quicksort(right)
+    )
+
 
 # *************************************
 
 
 # ************ Merge Sort *************
+
+
+def bottom_up_mergesort(a):
+    n = len(a)
+    temp = [0] * n
+
+    size = 1
+    while size < n:
+        for left in range(0, n, 2 * size):
+            mid = min(left + size, n)
+            right = min(left + 2 * size, n)
+
+            i, j, k = left, mid, left
+            while i < mid and j < right:
+                if a[i] <= a[j]:
+                    temp[k] = a[i]
+                    i += 1
+                else:
+                    temp[k] = a[j]
+                    j += 1
+                k += 1
+
+            while i < mid:
+                temp[k] = a[i]
+                i += 1
+                k += 1
+
+            while j < right:
+                temp[k] = a[j]
+                j += 1
+                k += 1
+
+            a[left:right] = temp[left:right]
+
+        size *= 2
+
 
 def mergesort(L):
     if len(L) <= 1:
