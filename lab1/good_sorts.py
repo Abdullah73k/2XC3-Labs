@@ -11,11 +11,26 @@ Author: Vincent Maccio
 """
 
 import math
-from bad_sorts import create_near_sorted_list
+import random
 import timeit
-
 SWAPS = [100, 500, 1000, 5000, 9247]
 
+def create_random_list(length, max_value):
+    return [random.randint(0, max_value) for _ in range(length)]
+
+
+def create_near_sorted_list(length, max_value, swaps):
+    L = create_random_list(length, max_value)
+    L.sort()
+    for _ in range(swaps):
+        r1 = random.randint(0, length - 1)
+        r2 = random.randint(0, length - 1)
+        swap(L, r1, r2)
+    return L
+
+# I have created this function to make the sorting algorithm code read easier
+def swap(L, i, j):
+    L[i], L[j] = L[j], L[i]
 
 # ************ Quick Sort ************
 def quicksort(L):
