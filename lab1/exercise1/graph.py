@@ -1,7 +1,6 @@
 import sys
 import os
 
-# Add the lab1 directory to Python path (only if not already there)
 lab1_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if lab1_dir not in sys.path:
     sys.path.insert(0, lab1_dir)
@@ -70,7 +69,7 @@ selection_times = [
 
 create_graph(
     mean_times=[insertion_times, selection_times, bubble_times],
-    plot_x=LENGTHS,  # Each algorithm uses the same x-axis values
+    plot_x=LENGTHS, 
     plot_labels=LABELS,
     x_label="List Size",
     y_label="Time (seconds)",
