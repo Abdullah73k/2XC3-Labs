@@ -1,6 +1,5 @@
 import numpy as np 
 import matplotlib.pyplot as plt
-from graphs.plotting import create_graph
 
 LENGTHS = [1000, 2000, 10000]
 
@@ -20,38 +19,29 @@ bubble2_times = [
 
 means = [bubble_times, bubble2_times]
 
-# plt.plot(
-#     LENGTHS,
-#     bubble_times,
-#     marker="o",
-#     color="#4c72b0",
-#     mfc="#4c72b0",
-#     label="Bubble Sort",
-# )
-
-# plt.plot(
-#     LENGTHS,
-#     bubble2_times,
-#     marker="o",
-#     color="#c44e52",
-#     mfc="#c44e52",
-#     label="Optimized Bubble Sort",
-# )
-
-# plt.xlabel("List Lengths")
-# plt.ylabel("Time (seconds)")
-# plt.legend()
-# plt.grid(True)
-# plt.title("Bubble Sort VS Optimized Bubble Sort")
-
-# plt.show()
-
-
-create_graph(
-    mean_times=means,
-    plot_x=LENGTHS,
-    plot_labels=LABELS,
-    x_label="List Lengths",
-    y_label="Time (seconds)",
-    title="Bubble Sort VS Optimized Bubble Sort"
+plt.plot(
+    LENGTHS,
+    bubble_times,
+    marker="o",
+    color="#4c72b0",
+    mfc="#4c72b0",
+    label="Bubble Sort",
 )
+
+plt.plot(
+    LENGTHS,
+    bubble2_times,
+    marker="o",
+    color="#c44e52",
+    mfc="#c44e52",
+    label="Optimized Bubble Sort",
+)
+
+plt.xlabel("List Lengths")
+plt.ylabel("Time (seconds)")
+plt.legend()
+plt.grid(True)
+plt.title("Bubble Sort VS Optimized Bubble Sort")
+
+plt.show()
+

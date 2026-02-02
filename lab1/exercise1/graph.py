@@ -69,7 +69,7 @@ selection_times = [
 
 create_graph(
     mean_times=[insertion_times, selection_times, bubble_times],
-    plot_x=LENGTHS, 
+    plot_x=LENGTHS,
     plot_labels=LABELS,
     x_label="List Size",
     y_label="Time (seconds)",
