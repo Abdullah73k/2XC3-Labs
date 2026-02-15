@@ -69,7 +69,6 @@ def DFS2(G, node1, node2):
 
     while len(STACK) != 0:
         curr_node = STACK.pop()
-        print(curr_node)
         if curr_node not in seen:
             seen.add(curr_node)
 
@@ -77,15 +76,15 @@ def DFS2(G, node1, node2):
                 path = []
                 while curr_node is not None:
                     path.append(curr_node)
-                    curr_node = parents.get(curr_node)          
+                    curr_node = parents.get(curr_node)
                 path.reverse()
                 return path
 
             for neighbor in G.adj[curr_node]:
-                if neighbor not in seen:
+                if neighbor not in seen and neighbor not in parents:
                     parents[neighbor] = curr_node
                     STACK.append(neighbor)
-    return None
+    return []
 
 
 # Test DFS2
@@ -99,8 +98,27 @@ g.add_edge(3, 4)
 g.add_edge(2, 4)
 g.add_edge(4, 5)
 
-print(DFS2(g, 0, 4))
+# print(DFS2(g, 0, 4))
+# print(DFS2(g, 0, 5))
 
+
+def DFS3(G, node1):
+    STACK = [node1]
+    seen = set([])
+    parents = {}
+
+    while len(STACK) != 0:
+        curr_node = STACK.pop()
+        if curr_node not in seen:
+            seen.add(curr_node)
+            for neighbor in G.adj[curr_node]:
+                if neighbor not in seen and neighbor not in parents:
+                    parents[neighbor] = curr_node
+                    STACK.append(neighbor)
+    return parents
+
+
+print(DFS3(g, 0))
 
 # Use the methods below to determine minimum vertex covers
 
