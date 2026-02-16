@@ -158,6 +158,29 @@ def DFS3(G, node1):
 
 # print(DFS3(g, 0))
 
+
+def is_cycle(G):
+    seen = set()
+    
+    for node in G.adj.keys():
+        S = []
+        if node not in seen:
+            S.append((node, None))
+        while S:
+            curr, parent = S.pop()
+            if curr in seen:
+                continue
+            seen.add(curr)
+            
+            for neighbor in G.adj[curr]:
+                if neighbor not in seen:
+                    S.append((neighbor, curr))
+                elif parent != neighbor:
+                    return True
+    return False
+
+print(is_cycle(g))
+
 # Use the methods below to determine minimum vertex covers
 
 
