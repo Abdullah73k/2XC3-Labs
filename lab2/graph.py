@@ -59,13 +59,28 @@ def BFS2(G, node1, node2):
                 curr = parents.get(curr)
             path.reverse()
             return path
-        
+
         for neighbor in G.adj[curr]:
             if neighbor not in seen:
                 Q.append(neighbor)
                 seen.add(neighbor)
                 parents[neighbor] = curr
     return []
+
+
+def BFS3(G, node1):
+    Q = deque([node1])
+    seen = set([node1])
+    parents = {}
+
+    while len(Q) != 0:
+        curr = Q.popleft()
+        for neighbor in G.adj[curr]:
+            if neighbor not in seen:
+                Q.append(neighbor)
+                seen.add(neighbor)
+                parents[neighbor] = curr
+    return parents
 
 
 # Depth First Search
