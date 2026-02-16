@@ -52,19 +52,19 @@ def BFS2(G, node1, node2):
 
     while len(Q) != 0:
         curr = Q.popleft()
-        for neighbor in G.adj[curr]:
-            if neighbor not in seen and curr != node2:
-                Q.append(neighbor)
-                seen.add(neighbor)
-                parents[neighbor] = curr
         if curr == node2:
             path = []
             while curr is not None:
                 path.append(curr)
                 curr = parents.get(curr)
-            print(parents)
             path.reverse()
             return path
+        
+        for neighbor in G.adj[curr]:
+            if neighbor not in seen:
+                Q.append(neighbor)
+                seen.add(neighbor)
+                parents[neighbor] = curr
     return []
 
 
