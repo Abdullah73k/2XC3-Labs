@@ -161,7 +161,7 @@ def DFS3(G, node1):
 
 def is_cycle(G):
     seen = set()
-    
+
     for node in G.adj.keys():
         S = []
         if node not in seen:
@@ -171,7 +171,7 @@ def is_cycle(G):
             if curr in seen:
                 continue
             seen.add(curr)
-            
+
             for neighbor in G.adj[curr]:
                 if neighbor not in seen:
                     S.append((neighbor, curr))
@@ -179,26 +179,52 @@ def is_cycle(G):
                     return True
     return False
 
+
 def is_cycle_recur(G):
     seen = set()
-    
+
     def helper(curr, parent):
         seen.add(curr)
-        
+
         for neighbor in G.adj[curr]:
             if neighbor not in seen:
                 if helper(neighbor, curr):
                     return True
             elif neighbor != parent:
                 return True
+
     for node in G.adj.keys():
         if node not in seen:
             if helper(node, None):
                 return True
     return False
 
+
 print(is_cycle(g))
 print(is_cycle_recur(g))
+
+
+def is_connected(G):
+    l = list(G.adj.keys())
+    queue = deque([l[0]])
+    seen = set([l[0]])
+
+    while queue:
+        curr = queue.popleft()
+
+        for neighbor in G.adj[curr]:
+            if neighbor not in seen:
+                seen.add(neighbor)
+                queue.append(neighbor)
+
+    for node in G.adj.keys():
+        if node not in seen:
+            return False
+    return True
+
+
+print(is_connected(g))
+
 
 # Use the methods below to determine minimum vertex covers
 
