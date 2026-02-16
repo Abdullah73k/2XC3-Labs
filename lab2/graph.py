@@ -179,7 +179,26 @@ def is_cycle(G):
                     return True
     return False
 
+def is_cycle_recur(G):
+    seen = set()
+    
+    def helper(curr, parent):
+        seen.add(curr)
+        
+        for neighbor in G.adj[curr]:
+            if neighbor not in seen:
+                if helper(neighbor, curr):
+                    return True
+            elif neighbor != parent:
+                return True
+    for node in G.adj.keys():
+        if node not in seen:
+            if helper(node, None):
+                return True
+    return False
+
 print(is_cycle(g))
+print(is_cycle_recur(g))
 
 # Use the methods below to determine minimum vertex covers
 
