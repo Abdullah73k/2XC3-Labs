@@ -1,4 +1,5 @@
 from collections import deque
+from math import random
 
 
 # Undirected graph using an adjacency list
@@ -259,3 +260,27 @@ def MVC(G):
             if len(subset) < len(min_cover):
                 min_cover = subset
     return min_cover
+
+
+## randomly generate graphs
+
+def create_random_graph(i, j):
+    if j > i * (i - 1) // 2:
+        raise ValueError("Too many edges for a simple graph without duplicates.")
+
+    graph = {node: set() for node in range(i)}
+    edges = set()
+
+    while len(edges) < j:
+        u = random.randint(0, i - 1)
+        v = random.randint(0, i - 1)
+
+        if u != v:
+            edge = tuple(sorted((u, v)))  # ensures (1,2) == (2,1)
+
+            if edge not in edges:
+                edges.add(edge)
+                graph[u].add(v)
+                graph[v].add(u)
+
+    return graph
