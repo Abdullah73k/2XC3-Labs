@@ -1,5 +1,5 @@
 from collections import deque
-from math import random
+import random
 
 
 # Undirected graph using an adjacency list
@@ -126,20 +126,6 @@ def DFS2(G, node1, node2):
     return []
 
 
-# Test DFS2
-
-g = Graph(6)
-
-g.add_edge(0, 1)
-g.add_edge(1, 2)
-g.add_edge(1, 3)
-g.add_edge(3, 4)
-g.add_edge(2, 4)
-g.add_edge(4, 5)
-
-print(DFS2(g, 0, 4))
-print(DFS2(g, 0, 5))
-
 
 def DFS3(G, node1):
     STACK = [node1]
@@ -156,8 +142,6 @@ def DFS3(G, node1):
                     STACK.append(neighbor)
     return parents
 
-
-# print(DFS3(g, 0))
 
 
 def is_cycle(G):
@@ -201,10 +185,6 @@ def is_cycle_recur(G):
     return False
 
 
-print(is_cycle(g))
-print(is_cycle_recur(g))
-
-
 def is_connected(G):
     l = list(G.adj.keys())
     queue = deque([l[0]])
@@ -223,8 +203,6 @@ def is_connected(G):
             return False
     return True
 
-
-print(is_connected(g))
 
 
 # Use the methods below to determine minimum vertex covers
@@ -284,3 +262,24 @@ def create_random_graph(i, j):
                 graph[v].add(u)
 
     return graph
+
+
+if __name__ == "__main__":
+    # Test DFS2
+
+    g = Graph(6)
+
+    g.add_edge(0, 1)
+    g.add_edge(1, 2)
+    g.add_edge(1, 3)
+    g.add_edge(3, 4)
+    g.add_edge(2, 4)
+    g.add_edge(4, 5)
+
+    print(DFS2(g, 0, 4))
+    print(DFS2(g, 0, 5))
+    
+    print(is_connected(g))
+    
+    print(is_cycle(g))
+    print(is_cycle_recur(g))
