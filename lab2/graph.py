@@ -246,7 +246,7 @@ def create_random_graph(i, j):
     if j > i * (i - 1) // 2:
         raise ValueError("Too many edges for a simple graph without duplicates.")
 
-    graph = {node: set() for node in range(i)}
+    G = Graph(i)
     edges = set()
 
     while len(edges) < j:
@@ -254,14 +254,13 @@ def create_random_graph(i, j):
         v = random.randint(0, i - 1)
 
         if u != v:
-            edge = tuple(sorted((u, v)))  # ensures (1,2) == (2,1)
+            edge = tuple(sorted((u, v)))
 
             if edge not in edges:
                 edges.add(edge)
-                graph[u].add(v)
-                graph[v].add(u)
+                G.add_edge(u, v)
 
-    return graph
+    return G
 
 
 if __name__ == "__main__":
