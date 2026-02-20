@@ -262,7 +262,39 @@ def create_random_graph(i, j):
 
     return G
 
+# Aproximation algorithms for vertex cover
 
+def approx1(G):
+    C = []
+    
+    local_adj = {}
+    for node in G.adj:
+        local_adj[node] = list(G.adj[node]) 
+        
+    # Step 5 logic is handled by the while loop condition. 
+    while not is_vertex_cover(G, C):
+        
+        # Step 2: Find the vertex with the highest degree in G, call this vertex v.
+        max_degree = -1
+        v = None
+        for node in local_adj:
+            degree = len(local_adj[node])
+            if degree > max_degree:
+                max_degree = degree
+                v = node
+                
+        # Step 3: Add v to C
+        if v not in C:
+            C.append(v)
+            
+        # Step 4: Remove all edges incident to node v from G
+        # We clear v's adjacency list, and remove v from all its neighbors' lists
+        for neighbor in local_adj[v]:
+            if v in local_adj[neighbor]:
+                local_adj[neighbor].remove(v)
+        local_adj[v] = []
+        
+    return C
 
 
 if __name__ == "__main__":
