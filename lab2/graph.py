@@ -336,6 +336,28 @@ def approx3(G):
         adj[v].clear()
 
 
+## Independent set Problem
+def is_independent_set(G, S):
+    for node in S:
+        for neighbor in G.adj[node]:
+            if neighbor in S:
+                return False
+    return True
+
+def MIS(G):
+    nodes = list(G.adj.keys())
+    
+    subsets = power_set(nodes)
+    
+    max_set = []
+    
+    for subset in subsets:
+        if is_independent_set(G, subset):
+            if len(subset) > len(max_set):
+                max_set = subset
+                
+    return max_set
+
 if __name__ == "__main__":
 
     g = Graph(6)
