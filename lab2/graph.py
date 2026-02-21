@@ -262,7 +262,7 @@ def create_random_graph(i, j):
 
     return G
 
-# Aproximation algorithms for vertex cover
+# Approximation algorithms for vertex cover
 
 def approx1(G):
     C = []
@@ -271,10 +271,7 @@ def approx1(G):
     for node in G.adj:
         local_adj[node] = list(G.adj[node]) 
         
-    # Step 5 logic is handled by the while loop condition. 
     while not is_vertex_cover(G, C):
-        
-        # Step 2: Find the vertex with the highest degree in G, call this vertex v.
         max_degree = -1
         v = None
         for node in local_adj:
@@ -283,12 +280,9 @@ def approx1(G):
                 max_degree = degree
                 v = node
                 
-        # Step 3: Add v to C
         if v not in C:
             C.append(v)
             
-        # Step 4: Remove all edges incident to node v from G
-        # We clear v's adjacency list, and remove v from all its neighbors' lists
         for neighbor in local_adj[v]:
             if v in local_adj[neighbor]:
                 local_adj[neighbor].remove(v)
@@ -296,9 +290,53 @@ def approx1(G):
         
     return C
 
+def approx2(G):
+    adj = {u: set(vs) for u, vs in G.adj.items()}
+    
+    C = set()
+    vertices = list(adj.keys())
+
+    while True:
+        edges_left = any(len(adj[u]) > 0 for u in adj)
+        if not edges_left:
+            return C
+
+        remaining = [v for v in vertices if v not in C]
+        v = random.choice(remaining)
+
+        C.add(v)
+        
+        
+def approx3(G):
+    adj = {u: set(vs) for u, vs in G.adj.items()}
+    
+    C = set()
+
+    while True:
+        edges = []
+        for u in adj:
+            for v in adj[u]:
+                if u < v:   
+                    edges.append((u, v))
+
+        if not edges:
+            return C
+
+        u, v = random.choice(edges)
+
+        C.add(u)
+        C.add(v)
+
+        for neighbor in list(adj[u]):
+            adj[neighbor].remove(u)
+        adj[u].clear()
+
+        for neighbor in list(adj[v]):
+            adj[neighbor].remove(v)
+        adj[v].clear()
+
 
 if __name__ == "__main__":
-    # Test DFS2
 
     g = Graph(6)
 
