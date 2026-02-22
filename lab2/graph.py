@@ -24,6 +24,9 @@ class Graph:
             self.adj[node1].append(node2)
             self.adj[node2].append(node1)
 
+    def get_size(self):
+        return len(self.adj)
+
     # def number_of_nodes():
     #     return len()
 
@@ -126,7 +129,6 @@ def DFS2(G, node1, node2):
     return []
 
 
-
 def DFS3(G, node1):
     STACK = [node1]
     seen = set([])
@@ -141,7 +143,6 @@ def DFS3(G, node1):
                     parents[neighbor] = curr_node
                     STACK.append(neighbor)
     return parents
-
 
 
 def is_cycle(G):
@@ -204,7 +205,6 @@ def is_connected(G):
     return True
 
 
-
 # Use the methods below to determine minimum vertex covers
 
 
@@ -242,6 +242,7 @@ def MVC(G):
 
 ## randomly generate graphs
 
+
 def create_random_graph(i, j):
     if j > i * (i - 1) // 2:
         raise ValueError("Too many edges for a simple graph without duplicates.")
@@ -262,15 +263,17 @@ def create_random_graph(i, j):
 
     return G
 
+
 # Approximation algorithms for vertex cover
+
 
 def approx1(G):
     C = []
-    
+
     local_adj = {}
     for node in G.adj:
-        local_adj[node] = list(G.adj[node]) 
-        
+        local_adj[node] = list(G.adj[node])
+
     while not is_vertex_cover(G, C):
         max_degree = -1
         v = None
@@ -279,44 +282,48 @@ def approx1(G):
             if degree > max_degree:
                 max_degree = degree
                 v = node
-                
+
         if v not in C:
             C.append(v)
-            
+
         for neighbor in local_adj[v]:
             if v in local_adj[neighbor]:
                 local_adj[neighbor].remove(v)
         local_adj[v] = []
-        
+
     return C
+
 
 def approx2(G):
     adj = {u: set(vs) for u, vs in G.adj.items()}
-    
     C = set()
     vertices = list(adj.keys())
 
     while True:
         edges_left = any(len(adj[u]) > 0 for u in adj)
         if not edges_left:
-            return C
+            return list(C)
 
         remaining = [v for v in vertices if v not in C]
         v = random.choice(remaining)
 
         C.add(v)
-        
-        
+
+        for neighbor in list(adj[v]):
+            adj[neighbor].remove(v)
+        adj[v].clear()
+
+
 def approx3(G):
     adj = {u: set(vs) for u, vs in G.adj.items()}
-    
+
     C = set()
 
     while True:
         edges = []
         for u in adj:
             for v in adj[u]:
-                if u < v:   
+                if u < v:
                     edges.append((u, v))
 
         if not edges:
@@ -371,8 +378,8 @@ if __name__ == "__main__":
 
     print(DFS2(g, 0, 4))
     print(DFS2(g, 0, 5))
-    
+
     print(is_connected(g))
-    
+
     print(is_cycle(g))
     print(is_cycle_recur(g))
