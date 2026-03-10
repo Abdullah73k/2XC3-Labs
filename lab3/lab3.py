@@ -7,9 +7,6 @@ class RBNode:
         self.parent = None
         self.colour = "R"
 
-    def get_uncle(self):
-        return
-
     def is_leaf(self):
         return self.left == None and self.right == None
 
@@ -44,18 +41,65 @@ class RBNode:
             return True
         return self.get_uncle().is_black()
 
+    def get_grandparent(self):
+        if self.parent:
+            return self.parent.parent
+        return None
+
     def __str__(self):
         return "(" + str(self.value) + "," + self.colour + ")"
 
     def __repr__(self):
-         return "(" + str(self.value) + "," + self.colour + ")"
+        return "(" + str(self.value) + "," + self.colour + ")"
 
     def rotate_right(self):
-        #TODO
+        x = self
+        y = x.left
+
+        if y is None:
+            return
+
+        parent = x.parent
+
+        x.left = y.right
+        if y.right is not None:
+            y.right.parent = x
+
+        y.parent = parent
+        if parent is not None:
+            if parent.left == x:
+                parent.left = y
+            else:
+                parent.right = y
+
+        y.right = x
+        x.parent = y
 
     def rotate_left(self):
-        #TODO
+        x = self
+        y = x.right
 
+        if y is None:
+            return
+
+        parent = x.parent
+
+        # Move y's left subtree to x's right
+        x.right = y.left
+        if y.left is not None:
+            y.left.parent = x
+
+        # Link y to x's parent
+        y.parent = parent
+        if parent is not None:
+            if parent.left == x:
+                parent.left = y
+            else:
+                parent.right = y
+
+        # Put x under y
+        y.left = x
+        x.parent = y
 
 
 class RBTree:
@@ -99,15 +143,51 @@ class RBTree:
             else:
                 self.__insert(node.right, value)
 
+
     def fix(self, node):
-        #You may alter code in this method if you wish, it's merely a guide.
-        if node.parent == None:
-            node.make_black()
-        while node != None and node.parent != None and node.parent.is_red(): 
-            #TODO
-        self.root.make_black()
-                    
+        while node.parent is not None and node.parent.is_red():
+            parent = node.parent
+            grand = node.get_grandparent()
+
+            if parent == grand.left:
+                uncle = grand.right
+
+                if uncle is not None and uncle.is_red():
+                    parent.make_black()
+                    uncle.make_black()
+                    grand.make_red()
+                    node = grand
+                else:
+                    if node == parent.right:
+                        node = parent
+                        node.rotate_left()
+
+                    parent.make_black()
+                    grand.make_red()
+                    grand.rotate_right()
+
+            else:
+                uncle = grand.left
+
+                if uncle is not None and uncle.is_red():
+                    parent.make_black()
+                    uncle.make_black()
+                    grand.make_red()
+                    node = grand
+                else:
+                    if node == parent.left:
+                        node = parent
+                        node.rotate_right()
+
+                    parent.make_black()
+                    grand.make_red()
+                    grand.rotate_left()
+
+        while node.parent is not None:
+            node = node.parent
+        node.make_black()
         
+
     def __str__(self):
         if self.is_empty():
             return "[]"
@@ -119,5 +199,13 @@ class RBTree:
         if node.left == None:
             return "[" + str(node) + " -> " + self.__str_helper(node.right) + "]"
         if node.right == None:
-            return "[" +  self.__str_helper(node.left) + " <- " + str(node) + "]"
-        return "[" + self.__str_helper(node.left) + " <- " + str(node) + " -> " + self.__str_helper(node.right) + "]"
+            return "[" + self.__str_helper(node.left) + " <- " + str(node) + "]"
+        return (
+            "["
+            + self.__str_helper(node.left)
+            + " <- "
+            + str(node)
+            + " -> "
+            + self.__str_helper(node.right)
+            + "]"
+        )
