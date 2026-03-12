@@ -8,7 +8,7 @@ from rbt import RBTree
 from graph import plot_graph
 
 LIST_LENGTH = 1000
-NUM_TRIALS = 20
+NUM_TRIALS = 100
 SWAP_COUNTS = [0, 1, 2, 3, 4, 5, 10, 25, 50, 100, 250, 500]
 
 def do_swaps(lst, num_swaps):
